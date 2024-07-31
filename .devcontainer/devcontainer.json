@@ -7,8 +7,8 @@
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {}
 	},
-	"service": "laravel.app",
-	"workspaceFolder": "/app",
+	"service": "laravel.test",
+	"workspaceFolder":  "/var/www/html",
 	"customizations": {
 		"vscode": {
 			"extensions": [
