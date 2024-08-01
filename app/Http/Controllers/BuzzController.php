@@ -6,6 +6,7 @@ use App\Models\Buzz;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 
 class BuzzController extends Controller
 {
@@ -14,7 +15,11 @@ class BuzzController extends Controller
      */
     public function index(): View
     {
-        return view('buzzs.index');
+        return view('buzzs.index', [
+
+            'buzzs' => Buzz::with('user')->latest()->get(),
+
+        ]);
     }
 
     /**
@@ -56,24 +61,56 @@ class BuzzController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Buzz $buzz)
+    public function edit(Buzz $buzz): View
     {
-        //
+        Gate::authorize('update', $buzz);
+
+ 
+
+        return view('buzzs.edit', [
+
+            'buzz' => $buzz,
+
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Buzz $buzz)
+    public function update(Request $request, Buzz $buzz): RedirectResponse
     {
-        //
+        Gate::authorize('update', $buzz);
+
+ 
+
+        $validated = $request->validate([
+
+            'message' => 'required|string|max:255',
+
+        ]);
+
+ 
+
+        $buzz->update($validated);
+
+ 
+
+        return redirect(route('buzzs.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Buzz $buzz)
+    public function destroy(Buzz $buzz): RedirectResponse
     {
-        //
+        Gate::authorize('delete', $buzz);
+
+ 
+
+        $buzz->delete();
+
+ 
+
+        return redirect(route('buzzs.index'));
     }
 }
