@@ -7,12 +7,12 @@
         <title>Oupsy</title>
 
         <style>
-            body {display: flex;justify-content: center;align-items: center;flex-direction: column}
+            body {display: flex; justify-content: center; align-items: center;flex-direction: column; margin-top: 80px}
             svg{ height: 60vh;}
         </style>
     </head>
     <body>
-<div class="grid h-screen place-content-center bg-white px-4">
+    <div class="grid h-screen place-content-center bg-white px-4">
     <div class="text-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
