@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class BuzzController extends Controller
 {
@@ -95,7 +96,7 @@ class BuzzController extends Controller
             if ($buzz->image) {
                 Storage::disk('public')->delete($buzz->image);
             }
-            
+           
             $imagePath = $request->file('image')->store('buzz_images', 'public');
             $buzz->image = $imagePath;
         }
@@ -104,11 +105,7 @@ class BuzzController extends Controller
 
         return redirect(route('buzzs.index'));
     }
-    
-
-    /**
-     * Remove the specified resource from storage.
-     */
+   
     public function destroy(Buzz $buzz): RedirectResponse
     {
         Gate::authorize('delete', $buzz);
