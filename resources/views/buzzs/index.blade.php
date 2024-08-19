@@ -61,7 +61,9 @@
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $buzz->message }}</p>
                         @if($buzz->image)
-                            <img src="{{ asset('storage/' . $buzz->image) }}" alt="Buzz Image" class="mt-4 rounded-lg max-w-full h-auto">
+                            <div class="mt-4 flex justify-center">
+                                <img src="{{ asset('storage/' . $buzz->image) }}" alt="Buzz Image" class="mt-4 rounded-lg max-w-full h-auto">
+                            </div>
                         @endif
                     </div>
                 </div>

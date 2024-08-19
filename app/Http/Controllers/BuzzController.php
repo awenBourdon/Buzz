@@ -38,13 +38,13 @@ class BuzzController extends Controller
     {
         $validated = $request->validate([
             'message' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:8192',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
         ]);
 
         $buzz = new Buzz($validated);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('iSmage')->store('buzz_images', 'public');
+            $imagePath = $request->file('image')->store('buzz_images', 'public');
             $buzz->image = $imagePath;
         }
 
@@ -86,7 +86,7 @@ class BuzzController extends Controller
 
         $validated = $request->validate([
             'message' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:8192',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
         ]);
 
         $buzz->message = $validated['message'];
