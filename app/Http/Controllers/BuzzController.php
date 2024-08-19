@@ -36,16 +36,18 @@ class BuzzController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-
             'message' => 'required|string|max:255',
-
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:8192',
         ]);
 
- 
+        $buzz = new Buzz($validated);
 
-        $request->user()->buzzs()->create($validated);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('buzz_images', 'public');
+            $buzz->image = $imagePath;
+        }
 
- 
+        $request->user()->buzzs()->save($buzz);
 
         return redirect(route('buzzs.index'));
     }
@@ -81,22 +83,28 @@ class BuzzController extends Controller
     {
         Gate::authorize('update', $buzz);
 
- 
-
         $validated = $request->validate([
-
             'message' => 'required|string|max:255',
-
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:8192',
         ]);
 
- 
+        $buzz->message = $validated['message'];
 
-        $buzz->update($validated);
+        if ($request->hasFile('image')) {
+            // Supprimez l'ancienne image si elle existe
+            if ($buzz->image) {
+                Storage::disk('public')->delete($buzz->image);
+            }
+            
+            $imagePath = $request->file('image')->store('buzz_images', 'public');
+            $buzz->image = $imagePath;
+        }
 
- 
+        $buzz->save();
 
         return redirect(route('buzzs.index'));
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -105,11 +113,11 @@ class BuzzController extends Controller
     {
         Gate::authorize('delete', $buzz);
 
- 
+        if ($buzz->image) {
+            Storage::disk('public')->delete($buzz->image);
+        }
 
         $buzz->delete();
-
- 
 
         return redirect(route('buzzs.index'));
     }

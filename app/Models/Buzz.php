@@ -12,6 +12,7 @@ class Buzz extends Model
     protected $fillable = [
 
         'message',
+        'image',
 
     ];
 
