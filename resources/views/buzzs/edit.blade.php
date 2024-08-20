@@ -9,22 +9,11 @@
             >{{ old('message', $buzz->message) }}</textarea>
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
             
-            <div class="mt-4">
-                <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
-                <input type="file" name="image" id="image" class="mt-1 block w-full">
-                <x-input-error :messages="$errors->get('image')" class="mt-2" />
-            </div>
-            
-            @if($buzz->image)
-                <div class="mt-4">
-                    <p>Current image:</p>
-                    <img src="{{ asset('storage/' . $buzz->image) }}" alt="Current Buzz Image" class="mt-2 max-w-xs">
-                </div>
-            @endif
+         
             
             <div class="mt-4 space-x-2">
-                <x-primary-button>{{ __('Save') }}</x-primary-button>
-                <a href="{{ route('buzzs.index') }}">{{ __('Cancel') }}</a>
+                <x-primary-button>{{ __('Changer la légende') }}</x-primary-button>
+                <a href="{{ route('buzzs.index') }}">{{ __('Annuler') }}</a>
             </div>
         </form>
     </div>

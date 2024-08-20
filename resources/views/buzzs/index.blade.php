@@ -4,7 +4,7 @@
             @csrf
             <textarea
                 name="message"
-                placeholder="{{ __('What\'s on your mind?') }}"
+                placeholder="{{ __('Faire le buzz ?') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             >{{ old('message') }}</textarea>
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
@@ -13,11 +13,11 @@
                 file:mr-4 file:py-2 file:px-4
                 file:rounded-full file:border-0
                 file:text-sm file:font-semibold
-                file:bg-indigo-50 file:text-indigo-700
+                file:bg-black-50 file:text-black-700
                 hover:file:bg-indigo-100">
             <x-input-error :messages="$errors->get('image')" class="mt-2" />
             
-            <x-primary-button class="mt-4">{{ __('Buzz') }}</x-primary-button>
+            <x-primary-button class="mt-4">{{ __('Buzzer') }}</x-primary-button>
         </form>
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
@@ -30,9 +30,9 @@
                         <div class="flex justify-between items-center">
                             <div>
                                 <span class="text-gray-800">{{ $buzz->user->name }}</span>
-                                <small class="ml-2 text-sm text-gray-600">{{ $buzz->created_at->format('j M Y, g:i a') }}</small>
+                                <small class="ml-2 text-sm text-gray-600">{{ $buzz->created_at->locale('fr')->isoFormat('D MMMM YYYY, HH:mm') }}</small>
                                 @unless ($buzz->created_at->eq($buzz->updated_at))
-                                    <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
+                                    <small class="text-sm text-gray-600"> &middot; {{ __('Modifié') }}</small>
                                 @endunless
                             </div>
                             @if ($buzz->user->is(auth()->user()))
@@ -46,13 +46,13 @@
                                     </x-slot>
                                     <x-slot name="content">
                                         <x-dropdown-link :href="route('buzzs.edit', $buzz)">
-                                            {{ __('Edit') }}
+                                            {{ __('Modifier la légende') }}
                                         </x-dropdown-link>
                                         <form method="POST" action="{{ route('buzzs.destroy', $buzz) }}">
                                             @csrf
                                             @method('delete')
                                             <x-dropdown-link :href="route('buzzs.destroy', $buzz)" onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('Delete') }}
+                                                {{ __('Supprimer') }}
                                             </x-dropdown-link>
                                         </form>
                                     </x-slot>
