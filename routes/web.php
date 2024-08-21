@@ -19,13 +19,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('buzzs', BuzzController::class)
-
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
-
     ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
 
 Route::fallback(function() {
     return view('404');
- });
+});
+

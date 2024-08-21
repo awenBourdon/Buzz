@@ -86,7 +86,7 @@ class BuzzController extends Controller
 
         $validated = $request->validate([
             'message' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
         ]);
 
         $buzz->message = $validated['message'];
