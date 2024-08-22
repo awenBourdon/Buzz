@@ -25,7 +25,7 @@ Buzz est une application web permettant aux utilisateurs de poster et partager d
 
 ## Utilisation
 
-Accédez à l'application via votre navigateur à l'adresse `http://localhost:8000`.
+Accédez à l'application via votre navigateur à l'adresse `http://localhost`.
 
 ## Développement
 
